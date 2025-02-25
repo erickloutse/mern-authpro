@@ -54,7 +54,7 @@ export default function Login() {
   };
 
   const handleOAuthLogin = (provider: "github" | "google") => {
-    window.location.href = `http://localhost:5000/api/auth/${provider}`;
+    window.location.href = `http://localhost:5001/api/auth/${provider}`;
   };
 
   return (

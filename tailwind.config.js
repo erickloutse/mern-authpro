@@ -5,7 +5,7 @@ export default {
     './pages/**/*.{ts,tsx}',
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    './frontend/**/*.{ts,tsx}',
   ],
   theme: {
     extend: {
