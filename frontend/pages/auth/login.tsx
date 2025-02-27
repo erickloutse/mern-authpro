@@ -45,7 +45,13 @@ export default function Login() {
       const response = await api.post("/auth/login", data);
       setAuth(response.data.user, response.data.token);
       toast.success("Connexion réussie");
-      navigate("/dashboard");
+
+      // Redirect based on user role
+      if (response.data.user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
     } catch (error) {
       toast.error("Erreur de connexion");
     } finally {
@@ -54,7 +60,7 @@ export default function Login() {
   };
 
   const handleOAuthLogin = (provider: "github" | "google") => {
-    window.location.href = `http://localhost:5001/api/auth/${provider}`;
+    window.location.href = `http://localhost:5000/api/auth/${provider}`;
   };
 
   return (

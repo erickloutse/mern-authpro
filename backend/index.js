@@ -18,10 +18,29 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 
 // Connect to MongoDB
-mongoose
-  .connect(process.env.MONGODB_URI)
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+const connectDB = async () => {
+  try {
+    // For development in browser environment, we'll use a mock DB approach
+    if (
+      !process.env.MONGODB_URI ||
+      process.env.MONGODB_URI.includes("localhost")
+    ) {
+      console.log("MongoDB connection skipped in development environment");
+      // Set up mock data
+      global.mockUsers = [];
+      return;
+    }
+
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log("Connected to MongoDB");
+  } catch (err) {
+    console.error("MongoDB connection error:", err);
+    // Set up mock data as fallback
+    global.mockUsers = [];
+  }
+};
+
+connectDB();
 
 // Start server
 const PORT = process.env.PORT || 5001;
